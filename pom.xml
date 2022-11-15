@@ -10,9 +10,9 @@
     </parent>
 
     <groupId>br.com.itau</groupId>
-    <artifactId>passoword-api</artifactId>
+    <artifactId>todo-list-api</artifactId>
     <version>0.0.1</version>
-    <name>Password API</name>
+    <name>TODO LIST API</name>
 
     <description>API responsavel por validar as senhas</description>
 
