@@ -24,7 +24,7 @@ CREATE TABLE task (
   date_created datetime DEFAULT NULL,
   date_last_update datetime DEFAULT NULL,
   description varchar(255) DEFAULT NULL,
-  status int DEFAULT NULL,
+  status int DEFAULT 1,
   summary varchar(255) DEFAULT NULL,
   PRIMARY KEY (id)
 );

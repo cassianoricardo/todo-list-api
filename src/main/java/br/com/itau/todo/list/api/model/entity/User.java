@@ -1,5 +1,6 @@
 package br.com.itau.todo.list.api.model.entity;
 
+import br.com.itau.todo.list.api.enums.StatusTaskEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,6 +28,11 @@ public class User implements UserDetails {
     @Getter
     @Column(unique = true)
     private String email;
+
+    @Setter
+    @Getter
+    private StatusTaskEnum status;
+
 
     @JsonIgnore
     @Setter

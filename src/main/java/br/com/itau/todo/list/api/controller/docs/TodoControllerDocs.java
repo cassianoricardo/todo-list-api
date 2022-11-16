@@ -21,6 +21,6 @@ public interface TodoControllerDocs {
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(array = @ArraySchema(schema = @Schema(
                             implementation = HttpStatus.class))))
             })
-    void create(@RequestBody(content = @Content(schema = @Schema(
+    public void createTask(@RequestBody(content = @Content(schema = @Schema(
             implementation = Boolean.class))) TaskDTO taskDTO);
 }

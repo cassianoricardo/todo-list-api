@@ -21,15 +21,10 @@ public class Task implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
     private Calendar dateCreated;
-    @Column
     private String summary;
-    @Column
     private String description;
-    @Column
     private Calendar dateLastUpdate;
-    @Column
     private StatusTaskEnum status;
 
 }
