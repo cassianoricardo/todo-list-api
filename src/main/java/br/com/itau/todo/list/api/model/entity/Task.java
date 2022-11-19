@@ -1,6 +1,7 @@
 package br.com.itau.todo.list.api.model.entity;
 
 import br.com.itau.todo.list.api.enums.StatusTaskEnum;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,7 +26,14 @@ public class Task implements Serializable {
     private String summary;
     private String description;
     private Calendar dateLastUpdate;
+    @Enumerated(EnumType.STRING)
     private StatusTaskEnum status;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private User user;
+
 
 }
 

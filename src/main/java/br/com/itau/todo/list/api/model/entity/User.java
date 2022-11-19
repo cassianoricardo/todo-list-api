@@ -1,77 +1,87 @@
 package br.com.itau.todo.list.api.model.entity;
 
-import br.com.itau.todo.list.api.enums.StatusTaskEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-
+import java.util.Objects;
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class User implements UserDetails {
+  private static final long serialVersionUID = 1L;
 
-    @Id
-    @Getter
-    @Setter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Setter
-    private String name;
+  private String name;
 
-    @Setter
-    @Getter
-    @Column(unique = true)
-    private String email;
+  @Column(unique = true)
+  private String email;
 
-    @Setter
-    @Getter
-    private StatusTaskEnum status;
+  @JsonIgnore
+  private String password;
 
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+          name = "user_role",
+          joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+          inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+  private Collection<Role> roles;
 
-    @JsonIgnore
-    @Setter
-    @Getter
-    private String password;
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return roles;
+  }
 
-    @Setter
-    @Getter
-    @ManyToOne
-    @JoinColumn(name="role_id", nullable=false)
-    private Role role;
+  public Long getId() {
+    return id;
+  }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    @Override
-    public String getUsername() {
-        return this.name;
-    }
+  @Override
+  public String getPassword() {
+    return password;
+  }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+  @Override
+  public String getUsername() {
+    return name;
+  }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    var user = (User) o;
+    return Objects.equals(id, user.id);
+  }
 }

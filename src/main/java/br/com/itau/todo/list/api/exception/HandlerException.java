@@ -1,6 +1,5 @@
-package br.com.itau.todo.list.api;
+package br.com.itau.todo.list.api.exception;
 
-import br.com.itau.todo.list.api.exception.ErrorMessage;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -23,7 +20,7 @@ public class HandlerException {
     public ResponseEntity<ErrorMessage> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
 
-        var messages = ex.getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList());
+        var messages = ex.getBindingResult().getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList());
         var joinMessage = "";
 
         if(Objects.nonNull(messages)){

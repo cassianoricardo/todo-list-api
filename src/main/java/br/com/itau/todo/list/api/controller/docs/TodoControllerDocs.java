@@ -1,6 +1,6 @@
 package br.com.itau.todo.list.api.controller.docs;
 
-import br.com.itau.todo.list.api.model.dto.TaskDTO;
+import br.com.itau.todo.list.api.controller.request.TaskCreateRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -21,6 +21,6 @@ public interface TodoControllerDocs {
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(array = @ArraySchema(schema = @Schema(
                             implementation = HttpStatus.class))))
             })
-    public void createTask(@RequestBody(content = @Content(schema = @Schema(
-            implementation = Boolean.class))) TaskDTO taskDTO);
+    public void create(@RequestBody(content = @Content(schema = @Schema(
+            implementation = Boolean.class))) TaskCreateRequest taskCreateRequest);
 }
