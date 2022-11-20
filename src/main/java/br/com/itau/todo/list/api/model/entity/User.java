@@ -1,6 +1,8 @@
 package br.com.itau.todo.list.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,7 +11,9 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 @Entity
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
   private static final long serialVersionUID = 1L;
 

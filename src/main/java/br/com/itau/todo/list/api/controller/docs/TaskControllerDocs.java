@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 
-public interface TodoControllerDocs {
+public interface TaskControllerDocs {
 
     @Operation(summary = "Cria uma nova tarefa",
             description = "descrição")

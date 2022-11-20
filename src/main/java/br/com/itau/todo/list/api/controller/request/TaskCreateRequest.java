@@ -4,9 +4,9 @@ import br.com.itau.todo.list.api.enums.StatusTaskEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NonNull;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
@@ -19,6 +19,6 @@ public class TaskCreateRequest {
     @NotBlank(message = "description is mandatory")
     private String description;
 
-    @NonNull
+    @NotNull(message = "status is mandatory")
     private StatusTaskEnum status;
 }

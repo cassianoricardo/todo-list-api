@@ -61,6 +61,7 @@ public class WebSecurityConfig {
         .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
         .authorizeRequests().antMatchers(AUTH_WHITE_LIST).permitAll()
+        //.authorizeRequests().anyRequest().permitAll()
         .anyRequest().authenticated();
 
     http.authenticationProvider(authenticationProvider());
