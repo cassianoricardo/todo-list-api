@@ -25,7 +25,6 @@ spring:
   flyway:
     enable: true
     baseline-on-migrate: true
-    schemas: db_todo
     user: root
     password: root
     url: jdbc:mysql://localhost:3306/db_todo

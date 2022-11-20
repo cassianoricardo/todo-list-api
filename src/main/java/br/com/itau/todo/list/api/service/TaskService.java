@@ -54,10 +54,10 @@ public class TaskService {
         var user = getUserAuthenticated();
         List<Task> tasks;
         if(status.isEmpty()) {
-            tasks = taskRepository.findByUser(user).
+            tasks = taskRepository.findByUserOrderByStatusDesc(user).
                     orElseThrow(() -> new RuntimeException(TASK_NOT_FOUND));
         }else{
-            tasks = taskRepository.findByStatusAndUser(status.get(),user)
+            tasks = taskRepository.findByStatusAndUserOrderByStatusDesc(status.get(),user)
                     .orElseThrow(() -> new RuntimeException(TASK_NOT_FOUND));;
         }
         return tasks.stream().map(task -> TaskResponse.builder().id(task.getId())

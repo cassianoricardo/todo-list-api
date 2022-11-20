@@ -119,7 +119,7 @@ class TaskServiceTest extends AbstractTodoListTest {
     void getTaskByUserAndStatus_without_status_task_not_found() {
 
         var user = new User();
-        when(taskRepository.findByUser(user)).thenReturn(Optional.empty());
+        when(taskRepository.findByUserOrderByStatusDesc(user)).thenReturn(Optional.empty());
 
         try (MockedStatic<UserLoggedService> userLoggedServiceStatic = Mockito.mockStatic(UserLoggedService.class)) {
 
@@ -131,7 +131,7 @@ class TaskServiceTest extends AbstractTodoListTest {
             userLoggedServiceStatic.verify(UserLoggedService::getUserAuthenticated);
         }
 
-        verify(taskRepository).findByUser(eq(user));
+        verify(taskRepository).findByUserOrderByStatusDesc(eq(user));
     }
 
     @Test
@@ -163,7 +163,7 @@ class TaskServiceTest extends AbstractTodoListTest {
                         .description("test")
                         .build());
 
-        when(taskRepository.findByStatusAndUser(eq(status.get()),eq(user))).thenReturn(Optional.of(tasks));
+        when(taskRepository.findByStatusAndUserOrderByStatusDesc(eq(status.get()),eq(user))).thenReturn(Optional.of(tasks));
 
         var taskResponseList = List.of(TaskResponse.builder()
                         .id(1L)
@@ -191,7 +191,7 @@ class TaskServiceTest extends AbstractTodoListTest {
             userLoggedServiceStatic.verify(UserLoggedService::getUserAuthenticated);
         }
 
-        verify(taskRepository).findByStatusAndUser(eq(status.get()),eq(user));
+        verify(taskRepository).findByStatusAndUserOrderByStatusDesc(eq(status.get()),eq(user));
     }
 
     @Test
@@ -201,7 +201,7 @@ class TaskServiceTest extends AbstractTodoListTest {
         var user = new User();
         var status = Optional.of(StatusTaskEnum.PENDING);
 
-        when(taskRepository.findByStatusAndUser(eq(status.get()),eq(user))).thenReturn(Optional.empty());
+        when(taskRepository.findByStatusAndUserOrderByStatusDesc(eq(status.get()),eq(user))).thenReturn(Optional.empty());
 
         try (MockedStatic<UserLoggedService> userLoggedServiceStatic = Mockito.mockStatic(UserLoggedService.class)) {
 
@@ -213,7 +213,7 @@ class TaskServiceTest extends AbstractTodoListTest {
             userLoggedServiceStatic.verify(UserLoggedService::getUserAuthenticated);
         }
 
-        verify(taskRepository).findByStatusAndUser(eq(status.get()),eq(user));
+        verify(taskRepository).findByStatusAndUserOrderByStatusDesc(eq(status.get()),eq(user));
     }
 
     @Test
@@ -244,7 +244,7 @@ class TaskServiceTest extends AbstractTodoListTest {
                         .description("test")
                         .build());
 
-        when(taskRepository.findByUser(eq(user))).thenReturn(Optional.of(tasks));
+        when(taskRepository.findByUserOrderByStatusDesc(eq(user))).thenReturn(Optional.of(tasks));
 
         var taskResponseList = List.of(TaskResponse.builder()
                         .id(1L)
@@ -272,6 +272,6 @@ class TaskServiceTest extends AbstractTodoListTest {
             userLoggedServiceStatic.verify(UserLoggedService::getUserAuthenticated);
         }
 
-        verify(taskRepository).findByUser(eq(user));
+        verify(taskRepository).findByUserOrderByStatusDesc(eq(user));
     }
 }

@@ -6,88 +6,259 @@
 	},
 	"item": [
 		{
-			"name": "create task",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"dateCreated\": \"2022-11-15T15:13:00\",\r\n  \"dateLastUpdate\": \"2022-11-15T15:13:00\",\r\n  \"description\": \"string\",\r\n  \"id\": 0,\r\n  \"status\": \"COMPLETED\",\r\n  \"summary\": \"string\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "auth",
+			"item": [
+				{
+					"name": "login (getToken)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"cassiano_ricardo@hotmail.com\",\r\n    \"password\":\"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/todo/task",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"todo",
-						"task"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "getToken",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "todo-list-api",
-							"type": "string"
+			"name": "todo",
+			"item": [
+				{
+					"name": "create task",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "local{token}",
+									"type": "string"
+								}
+							]
 						},
-						{
-							"key": "password",
-							"value": "123",
-							"type": "string"
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"dateCreated\": \"2022-11-15T15:13:00\",\r\n  \"dateLastUpdate\": \"2022-11-15T15:13:00\",\r\n  \"status\":\"PENDING\",\r\n  \"description\": \"string\",\r\n  \"summary\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/task",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"task"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "grant_type",
-							"value": "password",
-							"type": "default"
+				{
+					"name": "get Task  All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
 						},
-						{
-							"key": "username",
-							"value": "cassiano_ricardo@hotmail.com",
-							"type": "default"
-						},
-						{
-							"key": "password",
-							"value": "123",
-							"type": "default"
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXNzaWFub19yaWNhcmRvQGhvdG1haWwuY29tIiwiaWF0IjoxNjY4ODA1ODU3LCJleHAiOjE2Njg4OTIyNTd9.Jb2839eXTNNq2sP8EEX5Yu-4Hz3a9_Vy5EAvSF77KlY"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url_base}}/task?status=PENDING",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"task"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "PENDING"
+								}
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/oauth/token",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"oauth",
-						"token"
-					]
+				{
+					"name": "get Task",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXNzaWFub19yaWNhcmRvQGhvdG1haWwuY29tIiwiaWF0IjoxNjY4ODA1ODU3LCJleHAiOjE2Njg4OTIyNTd9.Jb2839eXTNNq2sP8EEX5Yu-4Hz3a9_Vy5EAvSF77KlY"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url_base}}/task?status=PENDING",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"task"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "PENDING"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "actuator",
+			"item": [
+				{
+					"name": "all rotes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/actuator",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"actuator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "health",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/actuator/health",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "metrics",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/actuator/metrics",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"actuator",
+								"metrics"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

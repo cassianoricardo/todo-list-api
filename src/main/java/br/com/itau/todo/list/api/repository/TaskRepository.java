@@ -13,8 +13,8 @@ import java.util.Optional;
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
 
-    Optional<List<Task>> findByUser(User user);
-    Optional<List<Task>> findByStatusAndUser(StatusTaskEnum status, User user);
+    Optional<List<Task>> findByUserOrderByStatusDesc(User user);
+    Optional<List<Task>> findByStatusAndUserOrderByStatusDesc(StatusTaskEnum status, User user);
 
 
 

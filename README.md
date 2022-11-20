@@ -79,8 +79,11 @@ Serão considerados como um diferencial na avaliação:
 
 - Abra a sua pasta de repositório, clique com o botão direito do mouse e selecione a opção "**Git Bash**"
 - Execute o comando abaixo:
-  - git clone https://github.com/cassianoricardo/password-api.git
+  - git clone https://github.com/cassianoricardo/todo-list-api.git
 
+## Pré requisitos do projeto
+
+# Bando de dados Mysql com banco database name db_todo
 
 ## Importando o projeto
 
@@ -116,4 +119,5 @@ Esse passo é comum para as IDE Eclipse e Intellij:
 - Lombok;
 - JUnit 5;
 - MockMvc
-- Regex
+- Spring Security
+- Token JWT
