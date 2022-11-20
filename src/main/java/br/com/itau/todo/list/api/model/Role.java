@@ -1,5 +1,6 @@
 package br.com.itau.todo.list.api.model;
 
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor
+@Builder
 public class Role implements Serializable, GrantedAuthority {
 
     @Id

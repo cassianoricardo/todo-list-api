@@ -114,7 +114,7 @@ Esse passo é comum para as IDE Eclipse e Intellij:
 
 ### Tecnologias presentes na API:
 
-- Spring boot 2.6.7;
+- Spring boot 2.7.3;
 - Swagger 3;
 - Lombok;
 - JUnit 5;

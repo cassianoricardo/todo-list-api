@@ -16,7 +16,7 @@ import java.util.Calendar;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Task implements Serializable {
+public class Todo implements Serializable {
 
     private static final long serialVersionUID = -3808269286877328785L;
     @Id

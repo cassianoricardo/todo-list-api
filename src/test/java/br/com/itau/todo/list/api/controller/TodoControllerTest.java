@@ -1,11 +1,11 @@
 package br.com.itau.todo.list.api.controller;
 
 import br.com.itau.todo.list.api.AbstractTodoListTest;
-import br.com.itau.todo.list.api.controller.request.TaskCreateRequest;
+import br.com.itau.todo.list.api.controller.request.TodoCreateRequest;
 import br.com.itau.todo.list.api.controller.response.TaskResponse;
 import br.com.itau.todo.list.api.enums.StatusTaskEnum;
 import br.com.itau.todo.list.api.controller.request.LoginRequest;
-import br.com.itau.todo.list.api.service.TaskService;
+import br.com.itau.todo.list.api.service.TodoService;
 import br.com.itau.todo.list.api.service.UserLoggedService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @ExtendWith(MockitoExtension.class)
-public class TaskControllerTest extends AbstractTodoListTest {
+public class TodoControllerTest extends AbstractTodoListTest {
 
     @Autowired
     private ObjectMapper mapper;
@@ -43,7 +43,7 @@ public class TaskControllerTest extends AbstractTodoListTest {
     private MockMvc mvc;
 
     @MockBean
-    private TaskService taskService;
+    private TodoService todoService;
 
     @MockBean
     private UserLoggedService userLoggedService;
@@ -63,14 +63,14 @@ public class TaskControllerTest extends AbstractTodoListTest {
     @DisplayName("create :: success")
     void create_success() throws Exception {
 
-        var taskCreateRequest = TaskCreateRequest.builder()
+        var taskCreateRequest = TodoCreateRequest.builder()
                 .status(StatusTaskEnum.PENDING)
                 .summary("Summary test")
                 .description("Description Test")
                 .build();
 
         mvc.perform(MockMvcRequestBuilders
-                        .post("/task")
+                        .post("/todo")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer ".concat(tokenUser))
                         .content(mapper.writeValueAsString(taskCreateRequest))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -80,13 +80,13 @@ public class TaskControllerTest extends AbstractTodoListTest {
     @DisplayName("create :: summary is mandatory")
     void create_mandatory_summary() throws Exception {
 
-        var taskCreateRequest = TaskCreateRequest.builder()
+        var taskCreateRequest = TodoCreateRequest.builder()
                 .status(StatusTaskEnum.PENDING)
                 .description("Description Test")
                 .build();
 
         mvc.perform(MockMvcRequestBuilders
-                        .post("/task")
+                        .post("/todo")
                         .content(mapper.writeValueAsString(taskCreateRequest))
                         .header(HttpHeaders.AUTHORIZATION, "Bearer ".concat(tokenUser))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -98,13 +98,13 @@ public class TaskControllerTest extends AbstractTodoListTest {
     @DisplayName("create :: description is mandatory")
     void create_mandatory_description() throws Exception {
 
-        var taskCreateRequest = TaskCreateRequest.builder()
+        var taskCreateRequest = TodoCreateRequest.builder()
                 .status(StatusTaskEnum.PENDING)
                 .summary("Summary Test")
                 .build();
 
         mvc.perform(MockMvcRequestBuilders
-                        .post("/task")
+                        .post("/todo")
                         .content(mapper.writeValueAsString(taskCreateRequest))
                         .header(HttpHeaders.AUTHORIZATION, "Bearer ".concat(tokenUser))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -116,13 +116,13 @@ public class TaskControllerTest extends AbstractTodoListTest {
     @DisplayName("create :: status is mandatory")
     void create_mandatory_status() throws Exception {
 
-        var taskCreateRequest = TaskCreateRequest.builder()
+        var taskCreateRequest = TodoCreateRequest.builder()
                 .description("Description Test")
                 .summary("Summary Test")
                 .build();
 
         mvc.perform(MockMvcRequestBuilders
-                        .post("/task")
+                        .post("/todo")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer ".concat(tokenUser))
                         .content(mapper.writeValueAsString(taskCreateRequest))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -146,22 +146,20 @@ public class TaskControllerTest extends AbstractTodoListTest {
 
         Optional<StatusTaskEnum> optional = Optional.of(StatusTaskEnum.PENDING);
 
-        doReturn(taskResponseList).when(taskService).getTaskByUserAndStatus(eq(optional));
+        doReturn(taskResponseList).when(todoService).getTodoByUserAndStatus(eq(optional));
 
             mvc.perform(MockMvcRequestBuilders
-                            .get("/task")
+                            .get("/todo")
                             .param("status", StatusTaskEnum.PENDING.name())
                             .header(HttpHeaders.AUTHORIZATION, "Bearer ".concat(tokenUser))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.[0].id").value(1))
-                    //.andExpect(jsonPath("$.[0].dateCreated").value("2022-11-19T00:00:00"))
                     .andExpect(jsonPath("$.[0].summary").value("test"))
                     .andExpect(jsonPath("$.[0].description").value("test"))
-                    //.andExpect(jsonPath("$.[0].dateLastUpdate").value("2022-11-19T00:00:00"))
                     .andExpect(jsonPath("$.[0].status").value(StatusTaskEnum.PENDING.name()));
 
-        verify(taskService).getTaskByUserAndStatus(eq(optional));
+        verify(todoService).getTodoByUserAndStatus(eq(optional));
         }
 
     @Test
@@ -181,21 +179,19 @@ public class TaskControllerTest extends AbstractTodoListTest {
 
         Optional<StatusTaskEnum> optional = Optional.empty();
 
-        doReturn(taskResponseList).when(taskService).getTaskByUserAndStatus(eq(optional));
+        doReturn(taskResponseList).when(todoService).getTodoByUserAndStatus(eq(optional));
 
         mvc.perform(MockMvcRequestBuilders
-                        .get("/task")
+                        .get("/todo")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer ".concat(tokenUser))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].id").value(1))
-                //.andExpect(jsonPath("$.[0].dateCreated").value("2022-11-19T00:00:00"))
                 .andExpect(jsonPath("$.[0].summary").value("test"))
                 .andExpect(jsonPath("$.[0].description").value("test"))
-                //.andExpect(jsonPath("$.[0].dateLastUpdate").value("2022-11-19T00:00:00"))
                 .andExpect(jsonPath("$.[0].status").value(StatusTaskEnum.PENDING.name()));
 
-        verify(taskService).getTaskByUserAndStatus(eq(optional));
+        verify(todoService).getTodoByUserAndStatus(eq(optional));
     }
 
     @Test
@@ -213,19 +209,106 @@ public class TaskControllerTest extends AbstractTodoListTest {
                 .dateLastUpdate(calendar)
                 .status(StatusTaskEnum.PENDING).build());
 
-        doReturn(taskResponseList).when(taskService).getAllTasks();
+        doReturn(taskResponseList).when(todoService).getAllTasks();
 
         mvc.perform(MockMvcRequestBuilders
-                        .get("/task/all")
+                        .get("/todo/all")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer ".concat(tokenAdmin))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].id").value(1))
-                //.andExpect(jsonPath("$.[0].dateCreated").value("2022-11-19T00:00:00"))
                 .andExpect(jsonPath("$.[0].summary").value("test"))
                 .andExpect(jsonPath("$.[0].description").value("test"))
-                //.andExpect(jsonPath("$.[0].dateLastUpdate").value("2022-11-19T00:00:00"))
                 .andExpect(jsonPath("$.[0].status").value(StatusTaskEnum.PENDING.name()));
+    }
+
+    @Test
+    @DisplayName("update :: success")
+    void update_success() throws Exception {
+
+        var todoCreateRequest = TodoCreateRequest.builder()
+                .status(StatusTaskEnum.PENDING)
+                .summary("Summary test")
+                .description("Description Test")
+                .build();
+        var id = Long.valueOf(1);
+
+        doNothing().when(todoService).updateTodo(id, todoCreateRequest);
+
+        mvc.perform(MockMvcRequestBuilders
+                        .put("/todo/1")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer ".concat(tokenUser))
+                        .content(mapper.writeValueAsString(todoCreateRequest))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+    @Test
+    @DisplayName("update :: summary is mandatory")
+    void update_mandatory_summary() throws Exception {
+
+        var taskCreateRequest = TodoCreateRequest.builder()
+                .status(StatusTaskEnum.PENDING)
+                .description("Description Test")
+                .build();
+
+        var id = "1";
+
+        mvc.perform(MockMvcRequestBuilders
+                        .put("/todo/".concat(id))
+                        .content(mapper.writeValueAsString(taskCreateRequest))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer ".concat(tokenUser))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.message").value("summary is mandatory"));
+    }
+
+    @Test
+    @DisplayName("update :: description is mandatory")
+    void update_mandatory_description() throws Exception {
+
+        var taskCreateRequest = TodoCreateRequest.builder()
+                .status(StatusTaskEnum.PENDING)
+                .summary("Summary Test")
+                .build();
+        var id = "1";
+        mvc.perform(MockMvcRequestBuilders
+                        .put("/todo/".concat(id))
+                        .content(mapper.writeValueAsString(taskCreateRequest))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer ".concat(tokenUser))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.message").value("description is mandatory"));
+    }
+
+    @Test
+    @DisplayName("update :: status is mandatory")
+    void update_mandatory_status() throws Exception {
+
+        var taskCreateRequest = TodoCreateRequest.builder()
+                .description("Description Test")
+                .summary("Summary Test")
+                .build();
+
+        var id = "1";
+        mvc.perform(MockMvcRequestBuilders
+                        .put("/todo/".concat(id))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer ".concat(tokenUser))
+                        .content(mapper.writeValueAsString(taskCreateRequest))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.message").value("status is mandatory"));
+    }
+
+    @Test
+    @DisplayName("delete :: success")
+    void delete_success() throws Exception {
+
+        var id = "1";
+        mvc.perform(MockMvcRequestBuilders
+                        .delete("/todo/".concat(id))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer ".concat(tokenUser))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     private String callEndpointLogin(LoginRequest body) throws Exception {

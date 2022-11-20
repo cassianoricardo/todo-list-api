@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -32,5 +33,19 @@ public class HandlerException {
                                                .error("Server was not able to process the request, check the params.")
                                                .message(joinMessage)
                                                .build());
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorMessage> handleNotFoundException(NotFoundException ex, HttpServletRequest request) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND.value())
+                .body(ErrorMessage.builder()
+                        .status(HttpStatus.NOT_FOUND.value())
+                        .timeStamp(Instant.now())
+                        .error("Not found")
+                        .message(ex.getMessage())
+                        .path(request.getServletPath())
+                        .build());
     }
 }

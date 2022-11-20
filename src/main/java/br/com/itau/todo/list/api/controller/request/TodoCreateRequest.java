@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Builder
 @AllArgsConstructor
-public class TaskCreateRequest {
+public class TodoCreateRequest {
 
     @NotBlank(message = "summary is mandatory")
     private String summary;
