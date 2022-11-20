@@ -193,6 +193,107 @@ class TodoServiceTest extends AbstractTodoListTest {
     }
 
     @Test
+    @DisplayName("deleteTodo :: success using user with role USER")
+    void removeTodo_success_role_user() {
+
+        try (MockedStatic<UserLoggedService> userLoggedServiceStatic = Mockito.mockStatic(UserLoggedService.class)) {
+            var user = User.builder().roles(List.of(new Role(1L,"USER"))).build();
+
+            userLoggedServiceStatic.when(UserLoggedService::getUserAuthenticated).thenReturn(user);
+            var id = Long.valueOf(1);
+
+            when(todoRepository.findByIdAndUser(eq(id), eq(user)))
+                    .thenReturn(Optional.of(Todo.builder()
+                            .id(1L)
+                            .user(user)
+                            .dateCreated(Calendar.getInstance())
+                            .dateLastUpdate(Calendar.getInstance())
+                            .status(StatusTaskEnum.PENDING)
+                            .summary("test")
+                            .description("test")
+                            .build()));
+
+            todoService.deleteTodo(id);
+
+            userLoggedServiceStatic.verify(UserLoggedService::getUserAuthenticated);
+            verify(todoRepository).findByIdAndUser(eq(id), eq(user));
+        }
+        verify(todoRepository).delete(any());
+    }
+
+    @Test
+    @DisplayName("deleteTodo :: success using user with role ADMIN")
+    void removeTodo_success_role_admin() {
+
+        try (MockedStatic<UserLoggedService> userLoggedServiceStatic = Mockito.mockStatic(UserLoggedService.class)) {
+            var user = User.builder().roles(List.of(new Role(1L,"ADMIN"))).build();
+
+            userLoggedServiceStatic.when(UserLoggedService::getUserAuthenticated).thenReturn(user);
+            var id = Long.valueOf(1);
+
+            when(todoRepository.findById(eq(id)))
+                    .thenReturn(Optional.of(Todo.builder()
+                            .id(1L)
+                            .user(user)
+                            .dateCreated(Calendar.getInstance())
+                            .dateLastUpdate(Calendar.getInstance())
+                            .status(StatusTaskEnum.PENDING)
+                            .summary("test")
+                            .description("test")
+                            .build()));
+
+            todoService.deleteTodo(id);
+
+            userLoggedServiceStatic.verify(UserLoggedService::getUserAuthenticated);
+            verify(todoRepository).findById(eq(id));
+        }
+        verify(todoRepository).delete(any());
+    }
+
+
+    @Test
+    @DisplayName("removeTodo :: todo not found using user with role USER")
+    void removeTodo_todo_not_found_role_user() {
+
+        try (MockedStatic<UserLoggedService> userLoggedServiceStatic = Mockito.mockStatic(UserLoggedService.class)) {
+            var user = User.builder().roles(List.of(new Role(1L,"USER"))).build();
+
+            userLoggedServiceStatic.when(UserLoggedService::getUserAuthenticated).thenReturn(user);
+            var id = Long.valueOf(1);
+
+            when(todoRepository.findByIdAndUser(eq(id), eq(user)))
+                    .thenReturn(Optional.empty());
+
+            NotFoundException exception = assertThrows(NotFoundException.class, () -> todoService.deleteTodo(id));
+            Assertions.assertEquals(exception.getMessage(), "todo not found");
+
+            userLoggedServiceStatic.verify(UserLoggedService::getUserAuthenticated);
+            verify(todoRepository).findByIdAndUser(eq(id), eq(user));
+        }
+    }
+
+    @Test
+    @DisplayName("removeTodo :: todo not found using user with role ADMIN")
+    void removeTodo_todo_not_found_role_admin() {
+
+        try (MockedStatic<UserLoggedService> userLoggedServiceStatic = Mockito.mockStatic(UserLoggedService.class)) {
+            var user = User.builder().roles(List.of(new Role(1L,"ADMIN"))).build();
+
+            userLoggedServiceStatic.when(UserLoggedService::getUserAuthenticated).thenReturn(user);
+            var id = Long.valueOf(1);
+
+            when(todoRepository.findById(eq(id)))
+                    .thenReturn(Optional.empty());
+
+            NotFoundException exception = assertThrows(NotFoundException.class, () -> todoService.deleteTodo(id));
+            Assertions.assertEquals(exception.getMessage(), "todo not found");
+
+            userLoggedServiceStatic.verify(UserLoggedService::getUserAuthenticated);
+            verify(todoRepository).findById(eq(id));
+        }
+    }
+
+    @Test
     @DisplayName("getAllTodos :: success")
     void getAllTodos() {
 

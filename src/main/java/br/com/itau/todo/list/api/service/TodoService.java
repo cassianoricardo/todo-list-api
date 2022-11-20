@@ -87,12 +87,12 @@ public class TodoService {
 
         if(isAdmin(user)){
             todo = todoRepository.findById(id).orElseThrow(()-> {
-                log.error("todo id : {}, not found", id);
+                log.error("todo id : {} not found", id);
                 throw new NotFoundException("todo not found");
             });
         }else{
             todo = todoRepository.findByIdAndUser(id, user).orElseThrow(()-> {
-                log.error("todo id : {}, not found", id);
+                log.error("todo id : {} not found", id);
                 throw new NotFoundException("todo not found");
             });
         }
@@ -116,13 +116,13 @@ public class TodoService {
 
          if(isAdmin(user)){
             todo = todoRepository.findById(id).orElseThrow(()-> {
-                log.error("todo id : {}, not found",id);
-                throw new NotFoundException(String.format("todo id: %d not found", id));
+                log.error("todo id : {} not found", id);
+                throw new NotFoundException("todo not found");
             });
         }else{
              todo = todoRepository.findByIdAndUser(id, user).orElseThrow(()-> {
-                 log.error("todo id : {}, not found",id);
-                 throw new NotFoundException(String.format("todo id: %d not found", id));
+                 log.error("todo id : {} not found", id);
+                 throw new NotFoundException("todo not found");
              });
          }
         todoRepository.delete(todo);
