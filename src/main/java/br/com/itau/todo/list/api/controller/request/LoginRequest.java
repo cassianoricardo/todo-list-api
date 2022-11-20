@@ -1,4 +1,4 @@
-package br.com.itau.todo.list.api.model.request;
+package br.com.itau.todo.list.api.controller.request;
 
 import lombok.Builder;
 import lombok.Data;

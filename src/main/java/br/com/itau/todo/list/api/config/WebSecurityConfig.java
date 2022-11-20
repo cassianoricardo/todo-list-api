@@ -1,7 +1,7 @@
 package br.com.itau.todo.list.api.config;
 
-import br.com.itau.todo.list.api.config.jwt.AuthEntryPointJwt;
-import br.com.itau.todo.list.api.config.jwt.AuthTokenFilter;
+import br.com.itau.todo.list.api.filter.jwt.AuthEntryPointJwt;
+import br.com.itau.todo.list.api.filter.jwt.AuthTokenFilter;
 import br.com.itau.todo.list.api.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

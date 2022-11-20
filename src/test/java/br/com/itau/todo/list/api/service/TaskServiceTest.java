@@ -4,10 +4,9 @@ import br.com.itau.todo.list.api.AbstractTodoListTest;
 import br.com.itau.todo.list.api.controller.request.TaskCreateRequest;
 import br.com.itau.todo.list.api.controller.response.TaskResponse;
 import br.com.itau.todo.list.api.enums.StatusTaskEnum;
-import br.com.itau.todo.list.api.model.entity.Task;
-import br.com.itau.todo.list.api.model.entity.User;
+import br.com.itau.todo.list.api.model.Task;
+import br.com.itau.todo.list.api.model.User;
 import br.com.itau.todo.list.api.repository.TaskRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,9 +16,6 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Calendar;
 import java.util.List;
@@ -32,13 +28,11 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class TaskServiceTest extends AbstractTodoListTest {
 
-
     @InjectMocks
     TaskService taskService;
 
     @Mock
     TaskRepository taskRepository;
-
 
     @Test
     @DisplayName("createTask :: success")

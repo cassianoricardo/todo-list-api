@@ -1,9 +1,9 @@
 package br.com.itau.todo.list.api.controller;
 
-import br.com.itau.todo.list.api.config.jwt.JwtUtils;
-import br.com.itau.todo.list.api.model.entity.User;
-import br.com.itau.todo.list.api.model.request.LoginRequest;
-import br.com.itau.todo.list.api.model.response.JwtResponse;
+import br.com.itau.todo.list.api.util.JwtUtils;
+import br.com.itau.todo.list.api.model.User;
+import br.com.itau.todo.list.api.controller.request.LoginRequest;
+import br.com.itau.todo.list.api.controller.response.JwtResponse;
 import br.com.itau.todo.list.api.repository.RoleRepository;
 import br.com.itau.todo.list.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

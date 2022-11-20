@@ -1,4 +1,4 @@
-package br.com.itau.todo.list.api.model.entity;
+package br.com.itau.todo.list.api.model;
 
 import br.com.itau.todo.list.api.enums.StatusTaskEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;

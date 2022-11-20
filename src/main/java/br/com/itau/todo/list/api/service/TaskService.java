@@ -3,7 +3,7 @@ package br.com.itau.todo.list.api.service;
 import br.com.itau.todo.list.api.controller.request.TaskCreateRequest;
 import br.com.itau.todo.list.api.controller.response.TaskResponse;
 import br.com.itau.todo.list.api.enums.StatusTaskEnum;
-import br.com.itau.todo.list.api.model.entity.Task;
+import br.com.itau.todo.list.api.model.Task;
 import br.com.itau.todo.list.api.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

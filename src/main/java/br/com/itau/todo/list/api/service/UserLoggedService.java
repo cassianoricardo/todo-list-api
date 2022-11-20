@@ -1,6 +1,6 @@
 package br.com.itau.todo.list.api.service;
 
-import br.com.itau.todo.list.api.model.entity.User;
+import br.com.itau.todo.list.api.model.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package br.com.itau.todo.list.api.config.jwt;
+package br.com.itau.todo.list.api.filter.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package br.com.itau.todo.list.api.model.response;
+package br.com.itau.todo.list.api.controller.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

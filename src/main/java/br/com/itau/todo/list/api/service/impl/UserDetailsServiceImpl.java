@@ -1,6 +1,6 @@
 package br.com.itau.todo.list.api.service.impl;
 
-import br.com.itau.todo.list.api.model.entity.User;
+import br.com.itau.todo.list.api.model.User;
 import br.com.itau.todo.list.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;

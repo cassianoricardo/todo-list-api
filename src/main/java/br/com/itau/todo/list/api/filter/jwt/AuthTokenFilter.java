@@ -1,6 +1,7 @@
-package br.com.itau.todo.list.api.config.jwt;
+package br.com.itau.todo.list.api.filter.jwt;
 
-import br.com.itau.todo.list.api.model.entity.User;
+import br.com.itau.todo.list.api.util.JwtUtils;
+import br.com.itau.todo.list.api.model.User;
 import br.com.itau.todo.list.api.service.impl.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

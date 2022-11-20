@@ -1,4 +1,4 @@
-package br.com.itau.todo.list.api.model.entity;
+package br.com.itau.todo.list.api.model;
 
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
