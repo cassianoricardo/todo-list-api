@@ -32,8 +32,8 @@ public class User implements UserDetails {
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
           name = "user_role",
-          joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-          inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+          joinColumns = @JoinColumn(foreignKey = @ForeignKey(name = "fk_user_id"),name = "user_id", referencedColumnName = "id"),
+          inverseJoinColumns = @JoinColumn(foreignKey = @ForeignKey(name = "fk_role_id"), name = "role_id", referencedColumnName = "id"))
   private Collection<Role> roles;
 
   @Override

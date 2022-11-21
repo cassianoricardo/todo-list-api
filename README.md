@@ -1,61 +1,36 @@
 # TODO LIST API
 
-Criar uma RESTFUL API simples em Java que armazene e atualize tarefas (TODO-LIST API)
+Uma API RESTFUL simples em Java que armazena e atualiza tarefas
 
-## REQUISITOS FUNCIONAIS
+## Informações da API
 
-- Deve haver uma base de usuários pré-cadastrados (não precisa implementar a funcionalidade de cadastro) - ok
-- Somente usuários cadastrados nessa base podem incluir tarefas - ok
-- Cada tarefa deve possuir minimamente os dados:
- - ID do usuário
- - data/hora da inclusão
- - resumo da tarefa
- - descrição da tarefa
- - status (pending ou completed)
- - data/hora da alteração (quando houver mudança de status)
+- Cada usuário pode listar tarefas com filtro por status
 - Tarefas criadas por um usuário não podem ser vistas por outros usuários
-- Cada usuário deve poder listar tarefas com filtro por status
-- Se o usuário listar todas as tarefas, deve priorizar (no topo da listagem) tarefas com status "pending"
-- Plus: Deve haver um usuário com perfil de "super user" e somente ele poderá ver todas as tarefas de todos os usuários
-
-## REQUISITOS NÃO FUNCIONAIS
-
-- Toda ação do usuário sobre a lista de tarefas deve ser autenticada (acesso somente com token válido) - ok
-- Campos de data/hora devem ser exibidos na API no formato ISO (yyyy-MM-ddTHH:mm:ss) - ok
-- Plus: A senha / o secret não deve ficar exposto(a) na base de cadastro - ok
-- Plus: deve haver autorização para permitir somente o “super user” de ver todas as tarefas
- 
-## INFORMAÇÕES SOBRE A API
-
-- Deve existir uma rota de autenticação e devolver um token a expirar em 5min (POST /auth) - avaliar soluções persistência da sessão em cache
-- Deve persistir os dados uma base de sua escolha (Relacional / NoSQL) - explicar sobre a abordagem escolhida
-- Fornecer as rotas e verbos HTTP adequados para cada função / requisito funcional (ex: GET, PUT, POST, DELETE /todo)
-- Deve validar sessão (token) do usuário em todas as rotas (exceto na de autenticação)
-- Deve manter log/trace das ações executadas (pode utilizar componentes de terceiros)
-- Deve conter testes unitários (JUnit ou similar)
-- Plus: Disponibilizar uma rota para fornecer dados sobre a saúde dos seus componentes (GET /healthcheck) (pode utilizar componentes de terceiros)
-- Plus: Disponibilizar uma rota para indicadores de performance da API (ex: volume de requisições atendidas, tempo médio de serviço em milisegundos, etc) (GET /metrics) (pode utilizar componentes de terceiros)
-- OBS: não é necessário desenvolver o Frontend para input dos dados na API
-
-## ENTREGA
-
-A entrega da API deve ser disponibilizada no github.com em um repositório público. Escreva um breve arquivo README.md contendo informações da API, exemplos de uso (preferencialmente usando CURL), e como podemos rodar a API (incluindo recursos acoplados: DB, cache, etc.) via linha de comando para avaliação.
-
-## DIFERENCIAL
-
-Serão considerados como um diferencial na avaliação:
-
-- Documentação do código
-- Testes unitários com cobertura de no mínimo 80%
-- Testes de carga (JMeter ou similar)
-- Testes automatizados (linha de comando ou alguma plataforma de sua escolha)
-- Alta disponibilidade, escalabilidade horizontal, estratégia de deployment em containers ou Cloud publica
+- Somente usuários cadastrados na base podem incluir tarefas
+- Somente usuarios com a role de ADMIN poderá ver todas as tarefas de todos os usuários
+- Ao listar todas as tarefas ordena primeiro com status "pending" e depois os "completed"
+- Na base vai existir dois usuários pré-cadastrados um com role de ADMIN e outro com permissão de USER
+- Toda ação de usuário tem que ser autenticada (com um token JWT válido) adquirido no momento do login (POST /auth/login) que expira em 5min.
+- Cada tarefa é composta por:
+  - ID do usuário
+  - data/hora da inclusão, no formato ISO (yyyy-MM-ddTHH:mm:ss)
+  - resumo da tarefa
+  - descrição da tarefa
+  - status (pending ou completed)
+  - data/hora da alteração, no formato ISO (yyyy-MM-ddTHH:mm:ss)
+- A senha dos usuário são encriptadas na base
+- Para obter dados sobre a saúde dos seus componentes de acessar o endpoint /actuator/health
+  - Obs: apenas usuários com a permissão de ADMIN podem acessar esse endpoint
+- Para obter indicadores de performance da API (ex: volume de requisições atendidas, tempo médio de serviço em milisegundos, etc)  de acessar a rota /actuator/metrics
+  - Obs: apenas usuários com a permissão de ADMIN podem acessar esse endpoint
 
 ## Pré requisitos
 
 - [JDK 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
 - [Apache Maven 3.8.5](https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/)
 - [Git](https://git-scm.com/downloads)
+- [Mysql](https://dev.mysql.com/downloads/mysql/) 
+  - database name db_todo
 
 ## Configuração Windows
 
@@ -81,10 +56,6 @@ Serão considerados como um diferencial na avaliação:
 - Execute o comando abaixo:
   - git clone https://github.com/cassianoricardo/todo-list-api.git
 
-## Pré requisitos do projeto
-
-# Bando de dados Mysql com banco database name db_todo
-
 ## Importando o projeto
 
 ### Eclipse:
@@ -107,10 +78,19 @@ Serão considerados como um diferencial na avaliação:
 Esse passo é comum para as IDE Eclipse e Intellij:
 
 - Abra a classe **App.java** no diretório:
-  - src/main/java/br/com/itau/password/api
+  - src/main/java/br/com/itau/todo/list/api
 - Clique com o botão direito do mouse na classe **App**, selecione "**Run As**" e clique em "**Java Application**"
-- Após subir a Api será apresentado no console a URL do Swagger do Password API
+- Após subir a Api será apresentado no console a URL do Swagger do TODO LIST API
   - http://localhost:8080/swagger-ui/index.html
+
+## Como acessar a API via postman:
+
+- Abra o postman
+- Clique em **Collections**
+- Clique em import
+- Na Aba file adicione o arquivo presente no diretório abaixo:
+
+Diretório: todo-list-api\src\main\resources\api-todo-list.postman_collection.json
 
 ### Tecnologias presentes na API:
 

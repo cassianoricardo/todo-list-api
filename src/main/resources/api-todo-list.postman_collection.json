@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"cassiano_ricardo@hotmail.com\",\r\n    \"password\":\"123\"\r\n}",
+							"raw": "{\r\n    \"username\": \"cassiano_ricardo@hotmail.com\",\r\n    \"password\": \"123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -43,23 +43,154 @@
 			"name": "todo",
 			"item": [
 				{
-					"name": "create task",
+					"name": "create todo",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "local{token}",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
 						},
 						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXNzaWFub19yaWNhcmRvQGhvdG1haWwuY29tIiwiaWF0IjoxNjY4ODA1ODU3LCJleHAiOjE2Njg4OTIyNTd9.Jb2839eXTNNq2sP8EEX5Yu-4Hz3a9_Vy5EAvSF77KlY"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"string\",\r\n  \"status\": \"COMPLETED\",\r\n  \"summary\": \"string\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url_base}}/todo",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all todo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXNzaWFub19yaWNhcmRvQGhvdG1haWwuY29tIiwiaWF0IjoxNjY4ODA1ODU3LCJleHAiOjE2Njg4OTIyNTd9.Jb2839eXTNNq2sP8EEX5Yu-4Hz3a9_Vy5EAvSF77KlY"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url_base}}/todo/all",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"todo",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get todo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXNzaWFub19yaWNhcmRvQGhvdG1haWwuY29tIiwiaWF0IjoxNjY4ODA1ODU3LCJleHAiOjE2Njg4OTIyNTd9.Jb2839eXTNNq2sP8EEX5Yu-4Hz3a9_Vy5EAvSF77KlY"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url_base}}/todo?status=PENDING",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"todo"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "PENDING"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update todo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"dateCreated\": \"2022-11-15T15:13:00\",\r\n  \"dateLastUpdate\": \"2022-11-15T15:13:00\",\r\n  \"status\":\"PENDING\",\r\n  \"description\": \"string\",\r\n  \"summary\": \"string\"\r\n}",
+							"raw": "{\r\n  \"description\": \"string\",\r\n  \"status\": \"COMPLETED\",\r\n  \"summary\": \"string\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -67,19 +198,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{url_base}}/task",
+							"raw": "{{url_base}}/todo/1",
 							"host": [
 								"{{url_base}}"
 							],
 							"path": [
-								"task"
+								"todo",
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "get Task  All",
+					"name": "delete todo",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -91,80 +223,16 @@
 								}
 							]
 						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "accept",
-								"value": "*/*"
-							},
-							{
-								"key": "Authorization",
-								"value": "bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXNzaWFub19yaWNhcmRvQGhvdG1haWwuY29tIiwiaWF0IjoxNjY4ODA1ODU3LCJleHAiOjE2Njg4OTIyNTd9.Jb2839eXTNNq2sP8EEX5Yu-4Hz3a9_Vy5EAvSF77KlY"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"method": "DELETE",
+						"header": [],
 						"url": {
-							"raw": "{{url_base}}/task?status=PENDING",
+							"raw": "{{url_base}}/todo/2",
 							"host": [
 								"{{url_base}}"
 							],
 							"path": [
-								"task"
-							],
-							"query": [
-								{
-									"key": "status",
-									"value": "PENDING"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get Task",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "accept",
-								"value": "*/*"
-							},
-							{
-								"key": "Authorization",
-								"value": "bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXNzaWFub19yaWNhcmRvQGhvdG1haWwuY29tIiwiaWF0IjoxNjY4ODA1ODU3LCJleHAiOjE2Njg4OTIyNTd9.Jb2839eXTNNq2sP8EEX5Yu-4Hz3a9_Vy5EAvSF77KlY"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{url_base}}/task?status=PENDING",
-							"host": [
-								"{{url_base}}"
-							],
-							"path": [
-								"task"
-							],
-							"query": [
-								{
-									"key": "status",
-									"value": "PENDING"
-								}
+								"todo",
+								"2"
 							]
 						}
 					},
