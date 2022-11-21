@@ -194,7 +194,7 @@ class TodoServiceTest extends AbstractTodoListTest {
 
     @Test
     @DisplayName("deleteTodo :: success using user with role USER")
-    void removeTodo_success_role_user() {
+    void deleteTodo_success_role_user() {
 
         try (MockedStatic<UserLoggedService> userLoggedServiceStatic = Mockito.mockStatic(UserLoggedService.class)) {
             var user = User.builder().roles(List.of(new Role(1L,"USER"))).build();
@@ -252,8 +252,8 @@ class TodoServiceTest extends AbstractTodoListTest {
 
 
     @Test
-    @DisplayName("removeTodo :: todo not found using user with role USER")
-    void removeTodo_todo_not_found_role_user() {
+    @DisplayName("deleteTodo :: todo not found using user with role USER")
+    void deleteTodo_todo_not_found_role_user() {
 
         try (MockedStatic<UserLoggedService> userLoggedServiceStatic = Mockito.mockStatic(UserLoggedService.class)) {
             var user = User.builder().roles(List.of(new Role(1L,"USER"))).build();
@@ -273,8 +273,8 @@ class TodoServiceTest extends AbstractTodoListTest {
     }
 
     @Test
-    @DisplayName("removeTodo :: todo not found using user with role ADMIN")
-    void removeTodo_todo_not_found_role_admin() {
+    @DisplayName("deleteTodo :: todo not found using user with role ADMIN")
+    void deleteTodo_todo_not_found_role_admin() {
 
         try (MockedStatic<UserLoggedService> userLoggedServiceStatic = Mockito.mockStatic(UserLoggedService.class)) {
             var user = User.builder().roles(List.of(new Role(1L,"ADMIN"))).build();
